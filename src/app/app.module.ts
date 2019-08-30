@@ -45,7 +45,8 @@ import { ProjectsComponent } from './redmine/projects/projects.component';
     RedmineProjectsService,
     ConfigService,
     MessageService,
-    { provide: RequestCache, useClass: RequestCacheWithMap }, ProjectService
+    { provide: RequestCache, useClass: RequestCacheWithMap }, 
+    ProjectService
   ]
 })
 export class AppModule { }
