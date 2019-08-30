@@ -18,6 +18,12 @@ import { ConfigService } from './config/config.service';
 import { AboutComponent } from './about/about.component';
 import { MessageService } from './message.service';
 import { MessagesComponent } from './messages/messages.component';
+import { RequestCacheService, RequestCache, RequestCacheWithMap } from './request-cache.service';
+
+// import { RequestCache, RequestCacheWithMap } from './request-cache.service';
+
+import { ProjectService } from './redmine/project.service';
+import { ProjectsComponent } from './redmine/projects/projects.component';
 
 @NgModule({
   imports: [BrowserModule,
@@ -25,8 +31,21 @@ import { MessagesComponent } from './messages/messages.component';
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule],
-  declarations: [AppComponent, HelloComponent, MenuComponent, ConfigComponent, AboutComponent, MessagesComponent],
+  declarations: [
+    AppComponent,
+    HelloComponent,
+    MenuComponent,
+    ConfigComponent,
+    AboutComponent,
+    MessagesComponent,
+    ProjectsComponent
+  ],
   bootstrap: [AppComponent],
-  providers: [RedmineProjectsService, ConfigService, MessageService]
+  providers: [
+    RedmineProjectsService,
+    ConfigService,
+    MessageService,
+    { provide: RequestCache, useClass: RequestCacheWithMap }, ProjectService
+  ]
 })
 export class AppModule { }
