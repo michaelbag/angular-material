@@ -16,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ConfigComponent } from './config/config.component';
 import { ConfigService } from './config/config.service';
 import { AboutComponent } from './about/about.component';
+import { MessageService } from './message.service';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   imports: [BrowserModule,
@@ -23,8 +25,8 @@ import { AboutComponent } from './about/about.component';
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule],
-  declarations: [AppComponent, HelloComponent, MenuComponent, ConfigComponent, AboutComponent],
+  declarations: [AppComponent, HelloComponent, MenuComponent, ConfigComponent, AboutComponent, MessagesComponent],
   bootstrap: [AppComponent],
-  providers: [RedmineProjectsService, ConfigService]
+  providers: [RedmineProjectsService, ConfigService, MessageService]
 })
 export class AppModule { }

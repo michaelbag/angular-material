@@ -5,7 +5,6 @@
       <p><label>Root URL:</label> {{config.rootURL}}</p>
     </span>
 
-<p *ngIf="error" class="error">{{error | json}}</p>
 <p *ngIf="configFile" >{{configFile | json}}</p>
 
   <mat-card-actions>
@@ -17,7 +16,14 @@
 
       <button class="example-margin" mat-stroked-button (click)="showConfig();">Показать конфигурацию</button>
       <button class="example-margin" mat-stroked-button (click)="makeError();">Ошибка!</button>
+      <button class="example-margin" mat-stroked-button (click)="clear();">Очистить</button>
 
     </mat-card-actions>    
   </mat-card-content>
 </mat-card>
+
+<mat-card *ngIf="error">
+  <p class="error">{{error | json}}</p>
+</mat-card>
+
+

@@ -1,0 +1,12 @@
+
+
+<mat-card *ngIf="messageService.messages.length">
+  <mat-card-title>Сообщения</mat-card-title>
+  <ol>
+    <li *ngFor='let message of messageService.messages'> {{message}} </li>
+  </ol>
+
+    <mat-card-actions>
+  <button mat-stroked-button class="clear" (click)="messageService.clear()">clear</button>
+    </mat-card-actions>
+</mat-card>
