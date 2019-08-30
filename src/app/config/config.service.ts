@@ -12,7 +12,7 @@ export interface Config {
 
 @Injectable()
 export class ConfigService {
-  configUrl = 'assets/redmine.config.json';
+  configUrl = 'assets/config.json';
 
   constructor(private http: HttpClient) {
 
@@ -20,15 +20,27 @@ export class ConfigService {
 
   getConfig() {
     return this.http.get<Config>(this.configUrl)
-      .pipe(retry(3),
+      .pipe(
+        retry(3),
         catchError(this.handleError)
       );
+  }
+
+  getConfigText(): Observable<Config> {
+    return this.http.get<Config>(this.configUrl);
   }
 
   getConfigResponse(): Observable<HttpResponse<Config>> {
     return this.http.get<Config>(
       this.configUrl, { observe: 'response' });
   }
+
+  makeIntentionalError() {
+    return this.http.get('not/a/real/url')
+      .pipe(
+        catchError(this.handleError)
+      );
+  };
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -44,6 +56,6 @@ export class ConfigService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  }
+  };
 
 }

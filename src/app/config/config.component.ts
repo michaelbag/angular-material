@@ -14,6 +14,7 @@ export class ConfigComponent implements OnInit {
   error: any;
   config: Config;
   showThis: boolean;
+  configFile: any;
 
   constructor() {
     //    this.config.test = "Hi to all!";
@@ -37,12 +38,18 @@ export class ConfigComponent implements OnInit {
 
     // this.config.test = 'Test message';
 
+    // this.configFile = this.configService.getConfigText();
+
     this.configService.getConfig()
       .subscribe(
         (data: Config) => this.config = { ...data },
         error => this.error = error // error path
       );
     this.title = 'ЗАГРУЖЕНО!';
+  }
+
+   makeError() {
+    this.configService.makeIntentionalError.subscribe(null, error => this.error = error );
   }
 
 }

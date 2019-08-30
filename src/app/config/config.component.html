@@ -6,6 +6,7 @@
     </span>
 
 <p *ngIf="error" class="error">{{error | json}}</p>
+<p *ngIf="configFile" >{{configFile | json}}</p>
 
   <mat-card-actions>
     <mat-checkbox 
@@ -13,6 +14,10 @@
       [(ngModel)]="showThis">
     Show this
     </mat-checkbox>
-    <button mat-stroked-button (click)="showConfig();">Показать конфигурацию</button></mat-card-actions>    
+
+      <button class="example-margin" mat-stroked-button (click)="showConfig();">Показать конфигурацию</button>
+      <button class="example-margin" mat-stroked-button (click)="makeError();">Ошибка!</button>
+
+    </mat-card-actions>    
   </mat-card-content>
 </mat-card>
