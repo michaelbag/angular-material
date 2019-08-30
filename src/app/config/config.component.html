@@ -1,6 +1,9 @@
 <mat-card>
-  <mat-card-title>{{ title }}</mat-card-title>
-  <mat-card-content>
-    <p>redmine URL: {{ config.rootURL }}</p>
+	<mat-card-title>{{ title }}</mat-card-title>
+	<mat-card-content>
+		<button mat-button (click)="showConfig();">Показать конфигурацию</button>
+    <span *ngIf="config">
+      <p>redmine URL: {{ config.rootURL }}</p>
+    </span>
   </mat-card-content>
 </mat-card>

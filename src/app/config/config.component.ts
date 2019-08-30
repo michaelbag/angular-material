@@ -12,6 +12,7 @@ export class ConfigComponent implements OnInit {
   configService: ConfigService;
   title: string = 'Конфигурация';
   error: any;
+  showConfig: boolean;
 
   constructor() {
   }
