@@ -1,4 +1,5 @@
 {
   "rootURL": "https://supprt.remark.pro/",
-  "apiKye": ""
+  "apiKye": "",
+  "test": "Test string"
 }

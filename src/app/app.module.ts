@@ -15,6 +15,7 @@ import { RedmineProjectsService } from './redmine-projects.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ConfigComponent } from './config/config.component';
 import { ConfigService } from './config/config.service';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   imports: [BrowserModule,
@@ -22,7 +23,7 @@ import { ConfigService } from './config/config.service';
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule],
-  declarations: [AppComponent, HelloComponent, MenuComponent, ConfigComponent],
+  declarations: [AppComponent, HelloComponent, MenuComponent, ConfigComponent, AboutComponent],
   bootstrap: [AppComponent],
   providers: [RedmineProjectsService, ConfigService]
 })

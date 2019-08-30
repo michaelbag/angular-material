@@ -1,11 +1,18 @@
 <mat-card>
-	<mat-card-title>{{ title }}</mat-card-title>
+	<mat-card-title>{{title}}</mat-card-title>
 	<mat-card-content>
-		<button mat-button (click)="showConfig();">Показать конфигурацию</button>
-    <span *ngIf="config">
-      <p>redmine URL: {{ config.rootURL }}</p>
+		<span *ngIf="config">
+      <p><label>Root URL:</label> {{config.rootURL}}</p>
     </span>
-    <p>redmine URL: {{ config.rootURL }}</p>
-    <p>test: {{ config.test }}</p>
+
+<p *ngIf="error" class="error">{{error | json}}</p>
+
+  <mat-card-actions>
+    <mat-checkbox 
+      class="example-margin" 
+      [(ngModel)]="showThis">
+    Show this
+    </mat-checkbox>
+    <button mat-stroked-button (click)="showConfig();">Показать конфигурацию</button></mat-card-actions>    
   </mat-card-content>
 </mat-card>
