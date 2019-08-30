@@ -7,11 +7,12 @@ import { catchError, retry } from 'rxjs/operators';
 export interface Config {
   apiKey: string;
   rootURL: string;
+  test: string;
 }
 
 @Injectable()
 export class ConfigService {
-  configUrl = "assets/redmine.config.json";
+  configUrl = 'assets/redmine.config.json';
 
   constructor(private http: HttpClient) { 
 
