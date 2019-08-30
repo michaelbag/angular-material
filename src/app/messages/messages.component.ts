@@ -6,5 +6,10 @@ import { MessageService } from '../message.service';
   templateUrl: './messages.component.html'
 })
 export class MessagesComponent {
-  constructor(public messageService: MessageService) {}
+  constructor(public messageService: MessageService) {
+  }
+
+  addTestMessage() {
+    this.messageService.add('test');
+  }
 }

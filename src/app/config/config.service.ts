@@ -25,7 +25,7 @@ export class ConfigService {
         catchError(this.handleError)
       );
   }
-  
+
   getConfigResponse(): Observable<HttpResponse<Config>> {
     return this.http.get<Config>(
       this.configUrl, { observe: 'response' });
@@ -53,5 +53,7 @@ export class ConfigService {
         catchError(this.handleError)
       );
   }
+
+  
 
 }

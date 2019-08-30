@@ -6,7 +6,7 @@ import { MessageService } from '../message.service';
   selector: 'app-config',
   templateUrl: './config.component.html',
   styleUrls: ['./config.component.css'],
-  providers: [ConfigService]
+  providers: [ConfigService, MessageService]
 })
 
 export class ConfigComponent implements OnInit {
@@ -17,7 +17,7 @@ export class ConfigComponent implements OnInit {
   showThis: boolean;
   configFile: any;
 
-  constructor(private configService: ConfigService) {
+  constructor(private configService: ConfigService, private messageService: MessageService) {
     
   }
 
@@ -32,15 +32,32 @@ export class ConfigComponent implements OnInit {
         (data: Config) => this.config = { ...data },
         error => this.error = error // error path
       );
-    this.title = 'ЗАГРУЖЕНО!';
+    // this.title = 'ЗАГРУЖЕНО!';
   }
 
   makeError() {
     this.configService.makeIntentionalError().subscribe(null, error => this.error = error);
+    this.messageService.add(this.error);
   }
 
   clear() {
+
     this.error = undefined;
+    this.messageService.clear();
+  }
+
+  showConfigResponse() {
+    this.configService.getConfigResponse()
+      // resp is of type `HttpResponse<Config>`
+      .subscribe(resp => {
+        // display its headers
+        const keys = resp.headers.keys();
+        this.headers = keys.map(key =>
+          `${key}: ${resp.headers.get(key)}`);
+
+        // access the body directly, which is typed as `Config`.
+        this.config = { ...resp.body };
+      });
   }
 
 }

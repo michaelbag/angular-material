@@ -7,6 +7,10 @@
 
 <p *ngIf="configFile" >{{configFile | json}}</p>
 
+<mat-card *ngIf="error" class="outlined">
+  <p class="error">{{error | json}}</p>
+</mat-card>
+</mat-card-content>
   <mat-card-actions>
     <mat-checkbox 
       class="example-margin" 
@@ -14,16 +18,15 @@
     Show this
     </mat-checkbox>
 
-      <button class="example-margin" mat-stroked-button (click)="showConfig();">Показать конфигурацию</button>
-      <button class="example-margin" mat-stroked-button (click)="makeError();">Ошибка!</button>
-      <button class="example-margin" mat-stroked-button (click)="clear();">Очистить</button>
+      <button mat-stroked-button (click)="showConfig();">Показать конфигурацию</button>
+      <button mat-stroked-button (click)="makeError();">Ошибка!</button>
+      <button mat-stroked-button (click)="clear();">Очистить</button>
+      <button mat-stroked-button (click)="clear(); showConfigResponse()">getResponse</button>
 
     </mat-card-actions>    
-  </mat-card-content>
+  
 </mat-card>
 
-<mat-card *ngIf="error">
-  <p class="error">{{error | json}}</p>
-</mat-card>
+
 
 
