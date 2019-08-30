@@ -10,10 +10,20 @@ import { MaterialModule } from './material/material.module';
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
 import { MenuComponent } from './menu/menu.component';
+import { RedmineProjectsService } from './redmine-projects.service';
+
+import { HttpClientModule } from '@angular/common/http';
+import { ConfigComponent } from './config/config.component';
+import { ConfigService } from './config.service';
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, BrowserAnimationsModule, MaterialModule],
-  declarations: [AppComponent, HelloComponent, MenuComponent],
-  bootstrap: [AppComponent]
+  imports: [BrowserModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    HttpClientModule],
+  declarations: [AppComponent, HelloComponent, MenuComponent, ConfigComponent],
+  bootstrap: [AppComponent],
+  providers: [RedmineProjectsService, ConfigService]
 })
 export class AppModule { }
