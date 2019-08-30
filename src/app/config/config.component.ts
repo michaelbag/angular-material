@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from '../config.service';
+import { ConfigService, Config } from './config.service';
 
 @Component({
   selector: 'app-config',
@@ -8,20 +8,30 @@ import { ConfigService } from '../config.service';
 })
 export class ConfigComponent implements OnInit {
 
-  config: { [key: string]: string | boolean | number };
+  config: Config;
+  configService: ConfigService;
+  title: string = 'Конфигурация';
+  error: any;
 
-  constructor(private configService: ConfigService) {
+  constructor() {
   }
 
   ngOnInit() {
+    
   }
 
   showConfig() {
     this.configService.getConfig()
       .subscribe((data: Config) => this.config = {
-        "rootURL": data['rootURL'],
-        "apiKey": data['apiKey']
+        rootURL: data['rootURL'],
+        apiKey: data['apiKey']
       });
+
+  this.configService.getConfig()
+      .subscribe(
+        (data: Config) => this.config = { ...data }, // success path
+        error => this.error = error // error path
+      );
   }
 
 }
