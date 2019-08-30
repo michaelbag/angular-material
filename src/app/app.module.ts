@@ -7,14 +7,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 // }}
 
-
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
-
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, BrowserAnimationsModule, MaterialModule ],
-  declarations: [ AppComponent, HelloComponent ],
-  bootstrap:    [ AppComponent ]
+  imports: [BrowserModule, FormsModule, BrowserAnimationsModule, MaterialModule],
+  declarations: [AppComponent, HelloComponent, MenuComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
