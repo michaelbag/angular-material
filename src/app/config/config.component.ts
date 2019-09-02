@@ -17,9 +17,7 @@ export class ConfigComponent implements OnInit {
   showThis: boolean;
   configFile: any;
 
-  constructor(private configService: ConfigService, private messageService: MessageService) {
-    
-  }
+  constructor(private configService: ConfigService, private messageService: MessageService) { }
 
   ngOnInit() {
 
@@ -42,9 +40,11 @@ export class ConfigComponent implements OnInit {
   }
 
   clear() {
-
-    this.error = undefined;
     this.messageService.clear();
+    this.error = undefined;
+    this.messageService.add ("Сообщения очищены.");
+    this.showThis = !this.showThis;
+
   }
 
   showConfigResponse() {
