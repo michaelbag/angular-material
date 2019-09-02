@@ -19,8 +19,8 @@
     </mat-checkbox>
 
       <button mat-stroked-button (click)="showConfig();">Показать конфигурацию</button>
-      <button mat-stroked-button (click)="makeError();">Ошибка!</button>
-      <button mat-stroked-button (click)="clear();">Очистить</button>
+      <button mat-stroked-button (click)="makeError();"><i class="material-icons">error</i> Ошибка!</button>
+      <button mat-stroked-button (click)="clear();"><i class="material-icons">delete</i> Очистить</button>
       <button mat-stroked-button (click)="clear(); showConfigResponse()">getResponse</button>
 
     </mat-card-actions>    
