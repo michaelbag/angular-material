@@ -47,17 +47,17 @@ import { HttpErrorHandlerService } from './http-error-handler.service';
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
-    HttpClientXsrfModule.withOptions({
-      cookieName: 'My-Xsrf-Cookie',
-      headerName: 'My-Xsrf-Header',
-    }),
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, {
-        dataEncapsulation: false,
-        passThruUnknownUrl: true,
-        put204: false // return entity after PUT/update
-      }
-    )
+    // HttpClientXsrfModule.withOptions({
+    //   cookieName: 'My-Xsrf-Cookie',
+    //   headerName: 'My-Xsrf-Header',
+    // }),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, {
+    //     dataEncapsulation: false,
+    //     passThruUnknownUrl: true,
+    //     put204: false // return entity after PUT/update
+    //   }
+    // )
   ],
   declarations: [
     AppComponent,
@@ -82,7 +82,7 @@ import { HttpErrorHandlerService } from './http-error-handler.service';
     ProjectService,
     InMemoryDataService,
     PackageSearchService,
-    HttpErrorHandlerService //,
+    // HttpErrorHandlerService //,
     // AuthService
   ]
 })
