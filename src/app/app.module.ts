@@ -12,13 +12,13 @@ import { HelloComponent } from './hello.component';
 import { MenuComponent } from './menu/menu.component';
 import { RedmineProjectsService } from './redmine-projects.service';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ConfigComponent } from './config/config.component';
 import { ConfigService } from './config/config.service';
 import { AboutComponent } from './about/about.component';
 import { MessageService } from './message.service';
 import { MessagesComponent } from './messages/messages.component';
-import { RequestCacheService, RequestCache, RequestCacheWithMap } from './request-cache.service';
+import { RequestCache, RequestCacheWithMap } from './request-cache.service';
 
 // import { RequestCache, RequestCacheWithMap } from './request-cache.service';
 
@@ -26,11 +26,13 @@ import { ProjectService } from './redmine/project.service';
 import { ProjectsComponent } from './redmine/projects/projects.component';
 
 @NgModule({
-  imports: [BrowserModule,
+  imports: [
+    BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule],
+    HttpClientModule
+  ],
   declarations: [
     AppComponent,
     HelloComponent,
@@ -45,7 +47,11 @@ import { ProjectsComponent } from './redmine/projects/projects.component';
     RedmineProjectsService,
     ConfigService,
     MessageService,
-    { provide: RequestCache, useClass: RequestCacheWithMap }, 
+    {
+      provide: RequestCache,
+      useClass: RequestCacheWithMap //,
+      // multi: true
+    },
     ProjectService
   ]
 })

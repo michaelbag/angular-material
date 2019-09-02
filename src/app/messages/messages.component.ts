@@ -6,7 +6,7 @@ import { MessageService } from '../message.service';
   templateUrl: './messages.component.html'
 })
 export class MessagesComponent {
-  constructor(public messageService: MessageService) {
+  constructor(private messageService: MessageService) {
   }
 
   addTestMessage() {
