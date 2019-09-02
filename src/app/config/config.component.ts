@@ -38,6 +38,7 @@ export class ConfigComponent implements OnInit {
   makeError() {
     this.configService.makeIntentionalError().subscribe(null, error => this.error = error);
     this.messageService.add(this.error);
+    this.messageService.add("test");
   }
 
   clear() {
