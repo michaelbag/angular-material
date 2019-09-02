@@ -35,6 +35,10 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { ProjectService } from './redmine/project.service';
 import { ProjectsComponent } from './redmine/projects/projects.component';
 import { httpInterceptorProviders } from './http-interceptors/index';
+import { PackageSearchService } from './package-search/package-search.service';
+import { HttpErrorHandlerService } from './http-error-handler.service';
+
+// import { AuthService } from './auth.service';
 
 @NgModule({
   imports: [
@@ -76,7 +80,10 @@ import { httpInterceptorProviders } from './http-interceptors/index';
     },
     httpInterceptorProviders,
     ProjectService,
-    InMemoryDataService
+    InMemoryDataService,
+    PackageSearchService,
+    HttpErrorHandlerService //,
+    // AuthService
   ]
 })
 export class AppModule { }
