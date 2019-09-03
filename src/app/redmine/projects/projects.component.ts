@@ -1,33 +1,53 @@
 import { Component, OnInit } from '@angular/core';
-import { Project, ProjectService } from '../project.service';
+import { Project, Projects, ProjectService } from '../project.service';
+import {MessageService} from '../../message.service';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css']
 })
+
 export class ProjectsComponent implements OnInit {
 
   projects: Project[];
   title: string;
   projectsText: any;
+  headers: any;
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService, private messageService: MessageService) { }
 
   ngOnInit() {
     this.title = "Список проектов";
     this.projectService.getProjectList()
-      .subscribe((data: Project[]) => {
-        this.projects = data;
-        console.log(data)
+      .subscribe((data: Projects) => {
+        const projects = data.projects;
+        this.projects = { ...projects};
+        // this.messageService.add(data.projects);
       });
   }
 
   getText() {
     this.projectService.getProjectList()
-      .subscribe((data: any[]) => {
-        this.projectsText = data.length
+      .subscribe((data: Projects) => {
+        
+        this.projects = data.map(item =>
+          {return [{id: item.id}] }
+        );
       });
   }
 
+   showProjectsResponse() {
+    this.projectService.getProjectsResponse()
+      // resp is of type `HttpResponse<Config>`
+      .subscribe(resp => {
+        // display its headers
+        const keys = resp.headers.keys();
+        this.headers = keys.map(key =>
+          `${key}: ${resp.headers.get(key)}`);
+
+        // access the body directly, which is typed as `Config`.
+        this.projects = { ...resp.body.projects };
+      });
+   }
 }

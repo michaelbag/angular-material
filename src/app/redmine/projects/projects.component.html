@@ -11,11 +11,15 @@
 				<button mat-icon-button (click)="showInfo(link)">
           <!--<mat-icon>info</mat-icon>-->
         </button>
+        
 </mat-list-item>
 </mat-nav-list>
 
 <p>text: {{ projectsText }}</p>
 
+<p *ngFor="let head of headers">{{head}}</p>
 </mat-card-content>
-<mat-card-actions><button  mat-stroked-button (click)="getText()">Show</button></mat-card-actions>
+<mat-card-actions><button  mat-stroked-button (click)="getText()">Show</button>
+<button mat-stroked-button (click)="showProjectsResponse()">get Response</button>
+</mat-card-actions>
 </mat-card>

@@ -15,7 +15,8 @@ export class ConfigComponent implements OnInit {
   error: any;
   config: Config;
   showThis: boolean;
-  configFile: any;
+  configFile: any;  
+  headers: any;
 
   constructor(private configService: ConfigService, private messageService: MessageService) { }
 
