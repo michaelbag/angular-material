@@ -1,8 +1,19 @@
 <mat-card>
-  <mat-card-title>{{title}}</mat-card-title>
-  <mat-card-content>
-    <ul>
-      <li ngFor="let project of projects">{{project.name}} - {{project.identifier}}</li>
-    </ul>
-  </mat-card-content>
+	<mat-card-title>{{title}}</mat-card-title>
+	<mat-card-content>
+
+
+		<mat-nav-list>
+      <mat-list-item>Первая строка списка</mat-list-item>
+			<mat-list-item *ngFor="let project of projects">
+
+				<a matLine href="">{{ project.name }} - {{ project.identifier }}</a>
+				<button mat-icon-button (click)="showInfo(link)">
+          <!--<mat-icon>info</mat-icon>-->
+</button>
+</mat-list-item>
+</mat-nav-list>
+
+
+</mat-card-content>
 </mat-card>
