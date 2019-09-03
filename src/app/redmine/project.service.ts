@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpErrorResponse, HttpParams, HttpHeaders, RequestOptions } from '@angular/common/http';
 import { ConfigService, Config } from '../config/config.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -26,10 +26,11 @@ export interface Projects {
 
 @Injectable()
 export class ProjectService {
-
-  config: Config;
+  
   error: any;
   projectListURL: string;
+  requestOptions: RequestOptions;
+  private config: Config;
 
   constructor(private configService: ConfigService, private http: HttpClient, private messageService: MessageService) {
 
@@ -52,32 +53,41 @@ export class ProjectService {
     return (this.projectListURL);
   }
 
+  getHttpOptions(): RequestOptions {
+    if (!this.requestOptions) {
+      this.requestOptions = new RequestOptions({
+        'headers': new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          // 'apiKey': this.getConfig().apiKey
+        }),
+
+        'params': new HttpParams({
+          // 'apiKey': this.getConfig().apiKey
+        }),
+        'observe': 'response'
+      });
+      this.requestOptions.headers.set('apiKey', this.getConfig().apiKey);
+      this.requestOptions.params.set('apiKey', this.getConfig().apiKey); 
+    }
+    return (this.requestOptions);
+  }
+
   getProjectList() {
 
     this.messageService.add(`Try to get ${this.getProjectListURL()}...`);
 
-    //let params = new HttpParams().set("apiKey", this.config.apiKey);
-    /*
-    return this.http.jsonp<Projects>(this.getProjectListURL(), 'callback').pipe(
-      retry(3),
-      catchError(this.handleError) // then handle the error
-    );
-    */
-
-    let getHeaders = new HttpHeaders().set("apiKey", this.getConfig().apiKey);
-    let getParams = new HttpParams().set("apiKey", this.getConfig().apiKey);
-
-    return this.http.get<Projects>(this.getProjectListURL(), { headers: getHeaders, params: getParams })
+    return (this.http.get<Projects>(this.getProjectListURL(), {params: {'apiKey': this.getConfig().apiKey}} )
       .pipe(
         retry(3),
         catchError(this.handleError) // then handle the error
-      );
-
+      ));
   }
 
   getProjectsResponse(): Observable<HttpResponse<Projects>> {
-    let headers = new HttpHeaders().set("apiKey", this.getConfig().apiKey);
-    return this.http.get<Projects>(this.getProjectListURL(), { observe: 'response', headers: headers });
+    let headers = new HttpParams().set("apiKey", this.getConfig().apiKey);
+    return this.http.get<Projects>(this.getProjectListURL(), {'observe': 'response', params: {'apiKey': this.getConfig().apiKey}});
   }
 
   private handleError(error: HttpErrorResponse) {

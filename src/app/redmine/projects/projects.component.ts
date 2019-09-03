@@ -19,21 +19,21 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit() {
     this.title = "Список проектов";
+    /*
     this.projectService.getProjectList()
       .subscribe((data: Projects) => {
-        const projects = data.projects;
-        this.projects = { ...projects};
+        
+        this.projects = data.projects;
         // this.messageService.add(data.projects);
       });
+      */
   }
 
   getText() {
     this.projectService.getProjectList()
       .subscribe((data: Projects) => {
-        
-        this.projects = data.map(item =>
-          {return [{id: item.id}] }
-        );
+        this.projects = data.projects;
+        // this.messageService.add(data.projects);
       });
   }
 
@@ -47,7 +47,7 @@ export class ProjectsComponent implements OnInit {
           `${key}: ${resp.headers.get(key)}`);
 
         // access the body directly, which is typed as `Config`.
-        this.projects = { ...resp.body.projects };
+        //this.projects = { ...resp.body.projects };
       });
    }
 }
