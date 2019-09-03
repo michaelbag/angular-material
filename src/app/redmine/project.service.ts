@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse, HttpErrorResponse, HttpParams } from '@angula
 import { ConfigService, Config } from '../config/config.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { MessageService } from '../message.service';
 
 
 export interface Project {
@@ -20,7 +21,7 @@ export class ProjectService {
   config: Config;
   error: any;
 
-  constructor(private configService: ConfigService, private http: HttpClient) {
+  constructor(private configService: ConfigService, private http: HttpClient, private messageService: MessageService) {
 
   }
 
@@ -31,6 +32,7 @@ export class ProjectService {
 
     // Для информации по формату: https://www.redmine.org/projects/redmine/wiki/Rest_Projects
     let projectListURL = `${this.config.rootURL}/projects.xml`;
+    this.messageService.add (`Try to get ${projectListURL}...`);
 
     // let params = new HttpParams().set("apiKey", this.config.apiKey);
 

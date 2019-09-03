@@ -10,16 +10,24 @@ export class ProjectsComponent implements OnInit {
 
   projects: Project[];
   title: string;
+  projectsText: any;
 
   constructor(private projectService: ProjectService) { }
 
   ngOnInit() {
     this.title = "Список проектов";
     this.projectService.getProjectList()
-      .subscribe((data: any[]) => {
+      .subscribe((data: Project[]) => {
         this.projects = data;
         console.log(data)
-        });
+      });
+  }
+
+  getText() {
+    this.projectService.getProjectList()
+      .subscribe((data: any[]) => {
+        this.projectsText = data.length
+      });
   }
 
 }

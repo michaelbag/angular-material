@@ -10,10 +10,12 @@
 				<a matLine href="">{{ project.name }} - {{ project.identifier }}</a>
 				<button mat-icon-button (click)="showInfo(link)">
           <!--<mat-icon>info</mat-icon>-->
-</button>
+        </button>
 </mat-list-item>
 </mat-nav-list>
 
+<p>text: {{ projectsText }}</p>
 
 </mat-card-content>
+<mat-card-actions><button  mat-stroked-button (click)="getText()">Show</button></mat-card-actions>
 </mat-card>
