@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Project, Projects, ProjectService } from '../project.service';
+import { Response } from '@angular/common/http';
+
 import {MessageService} from '../../message.service';
 
 @Component({
@@ -31,8 +33,9 @@ export class ProjectsComponent implements OnInit {
 
   getText() {
     this.projectService.getProjectList()
-      .subscribe((data: Projects) => {
-        this.projects = data.projects;
+      .subscribe((data: Response ) => {
+        const result = data.json();
+        this.projects = result.projects;
         // this.messageService.add(data.projects);
       });
   }

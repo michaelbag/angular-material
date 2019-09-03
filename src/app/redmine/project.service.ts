@@ -26,7 +26,7 @@ export interface Projects {
 
 @Injectable()
 export class ProjectService {
-  
+
   error: any;
   projectListURL: string;
   requestOptions: RequestOptions;
@@ -69,7 +69,7 @@ export class ProjectService {
         'observe': 'response'
       });
       this.requestOptions.headers.set('apiKey', this.getConfig().apiKey);
-      this.requestOptions.params.set('apiKey', this.getConfig().apiKey); 
+      this.requestOptions.params.set('apiKey', this.getConfig().apiKey);
     }
     return (this.requestOptions);
   }
@@ -78,7 +78,7 @@ export class ProjectService {
 
     this.messageService.add(`Try to get ${this.getProjectListURL()}...`);
 
-    return (this.http.get<Projects>(this.getProjectListURL(), {params: {'apiKey': this.getConfig().apiKey}} )
+    return (this.http.get<Projects>(this.getProjectListURL(), { params: { 'apiKey': this.getConfig().apiKey } })
       .pipe(
         retry(3),
         catchError(this.handleError) // then handle the error
@@ -87,7 +87,7 @@ export class ProjectService {
 
   getProjectsResponse(): Observable<HttpResponse<Projects>> {
     let headers = new HttpParams().set("apiKey", this.getConfig().apiKey);
-    return this.http.get<Projects>(this.getProjectListURL(), {'observe': 'response', params: {'apiKey': this.getConfig().apiKey}});
+    return this.http.get<Projects>(this.getProjectListURL(), { 'observe': 'response', params: { 'apiKey': this.getConfig().apiKey } });
   }
 
   private handleError(error: HttpErrorResponse) {
