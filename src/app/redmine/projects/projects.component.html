@@ -1,25 +1,15 @@
 <mat-card>
 	<mat-card-title>{{title}}</mat-card-title>
 	<mat-card-content>
-
-
 		<mat-nav-list>
-      <mat-list-item>Первая строка списка</mat-list-item>
 			<mat-list-item *ngFor="let project of projects">
-
-				<a matLine href="">{{ project.name }} - {{ project.identifier }}</a>
-				<button mat-icon-button (click)="showInfo(link)">
-          <!--<mat-icon>info</mat-icon>-->
-        </button>
-        
-</mat-list-item>
-</mat-nav-list>
-
-<p>text: {{ projectsText }}</p>
-
-<p *ngFor="let head of headers">{{head}}</p>
-</mat-card-content>
-<mat-card-actions><button  mat-stroked-button (click)="getText()">Show</button>
-<button mat-stroked-button (click)="showProjectsResponse()">get Response</button>
-</mat-card-actions>
+				<a matLine href="">{{ project.name }}</a>
+				<button mat-icon-button (click)="showInfo(link)">Info</button>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button  mat-stroked-button (click)="loadProjectsList()">Обновить</button>
+    <button mat-stroked-button (click)="showProjectsResponse()">Получить ответ</button>
+  </mat-card-actions>
 </mat-card>

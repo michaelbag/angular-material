@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpErrorResponse, HttpParams, HttpHeaders, RequestOptions } from '@angular/common/http';
 import { ConfigService, Config } from '../config/config.service';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError, retry, switchMap } from 'rxjs/operators';
 import { MessageService } from '../message.service';
 
 // Для информации по формату: https://www.redmine.org/projects/redmine/wiki/Rest_Projects
@@ -30,27 +30,37 @@ export class ProjectService {
   error: any;
   projectListURL: string;
   requestOptions: RequestOptions;
-  private config: Config;
 
-  constructor(private configService: ConfigService, private http: HttpClient, private messageService: MessageService) {
+  constructor(private config: ConfigService, private http: HttpClient, private messageService: MessageService) {
 
   }
-
-  getConfig(): Config {
-    if (!this.config) {
-      this.configService.getConfig()
-        .subscribe((data: Config) => this.config = { ...data },
-          error => this.error = error);
+  /*
+    getProjectListURL(): string {
+      this.config.getConfig()
+        .subscribe((data: Config) => {
+          // return (`${data.rootURL}/projects.json`);
+          return ('assets/test.json');
+        });
     }
-    return (this.config);
-  }
-
-  getProjectListURL(): string {
-    if (!this.projectListURL) {
-      this.projectListURL = `${this.getConfig().rootURL}/projects.json`;
-      // ?apiKey=${this.getConfig().apiKey}
-    }
-    return (this.projectListURL);
+    */
+ 
+  getProjectList() {
+    return (
+      this.config.getConfig()
+        .pipe(
+          retry(3),
+          switchMap((configData: Config) => {
+            return (this.http.get<Projects>(`${configData.rootURL}/projects.json`, 
+            { headers: {'Access-Control-Allow-Origin': '*',
+            'X-Redmine-API-Key': configData.apiKey}, params: { 'key': configData.apiKey } })
+              .pipe(
+                retry(3),
+                catchError(this.handleError) // then handle the error
+              ));
+          }),
+          catchError(this.handleError)
+        )
+    );
   }
 
   getHttpOptions(): RequestOptions {
@@ -68,26 +78,21 @@ export class ProjectService {
         }),
         'observe': 'response'
       });
-      this.requestOptions.headers.set('apiKey', this.getConfig().apiKey);
-      this.requestOptions.params.set('apiKey', this.getConfig().apiKey);
+      //this.requestOptions.headers.set('key', this.config.getApiKey());
+      //this.requestOptions.params.set('key', this.config.getApiKey());
     }
     return (this.requestOptions);
   }
 
-  getProjectList() {
-
-    this.messageService.add(`Try to get ${this.getProjectListURL()}...`);
-
-    return (this.http.get<Projects>(this.getProjectListURL(), { params: { 'apiKey': this.getConfig().apiKey } })
-      .pipe(
-        retry(3),
-        catchError(this.handleError) // then handle the error
-      ));
-  }
-
   getProjectsResponse(): Observable<HttpResponse<Projects>> {
-    let headers = new HttpParams().set("apiKey", this.getConfig().apiKey);
-    return this.http.get<Projects>(this.getProjectListURL(), { 'observe': 'response', params: { 'apiKey': this.getConfig().apiKey } });
+    let headers = new HttpParams().set("key", this.config.getApiKey());
+    return (this.http.get<Projects>(
+      this.getProjectListURL(),
+      { 'observe': 'response', params: { 'key': this.config.getApiKey() } })
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      ));
   }
 
   private handleError(error: HttpErrorResponse) {

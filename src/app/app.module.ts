@@ -36,7 +36,8 @@ import { ProjectService } from './redmine/project.service';
 import { ProjectsComponent } from './redmine/projects/projects.component';
 import { httpInterceptorProviders } from './http-interceptors/index';
 import { PackageSearchService } from './package-search/package-search.service';
-import { HttpErrorHandlerService } from './http-error-handler.service';
+import { HttpErrorHandler } from './http-error-handler.service';
+import { ProjectComponent } from './redmine/project/project.component';
 
 // import { AuthService } from './auth.service';
 
@@ -66,7 +67,8 @@ import { HttpErrorHandlerService } from './http-error-handler.service';
     ConfigComponent,
     AboutComponent,
     MessagesComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    ProjectComponent
   ],
   bootstrap: [AppComponent],
   providers: [

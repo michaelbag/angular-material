@@ -15,29 +15,24 @@ export class ProjectsComponent implements OnInit {
   projects: Project[];
   title: string;
   projectsText: any;
-  headers: any;
+  header: any;
 
   constructor(private projectService: ProjectService, private messageService: MessageService) { }
 
   ngOnInit() {
-    this.title = "Список проектов";
-    /*
-    this.projectService.getProjectList()
-      .subscribe((data: Projects) => {
-        
-        this.projects = data.projects;
-        // this.messageService.add(data.projects);
-      });
-      */
+    this.title = "Проекты";
+    this.loadProjectsList();
   }
 
-  getText() {
+  loadProjectsList() {
     this.projectService.getProjectList()
-      .subscribe((data: Response ) => {
-        const result = data.json();
-        this.projects = result.projects;
-        // this.messageService.add(data.projects);
+      .subscribe((data: Projects ) => {        
+        this.projects = data.projects;
       });
+  }
+
+  showInfo(link: string) {
+    
   }
 
    showProjectsResponse() {
@@ -46,7 +41,7 @@ export class ProjectsComponent implements OnInit {
       .subscribe(resp => {
         // display its headers
         const keys = resp.headers.keys();
-        this.headers = keys.map(key =>
+        this.header = keys.map(key =>
           `${key}: ${resp.headers.get(key)}`);
 
         // access the body directly, which is typed as `Config`.
