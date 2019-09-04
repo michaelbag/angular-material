@@ -10,10 +10,80 @@ import { MaterialModule } from './material/material.module';
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
 import { MenuComponent } from './menu/menu.component';
+import { RedmineProjectsService } from './redmine-projects.service';
+
+import {
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+  HttpClientXsrfModule
+} from '@angular/common/http';
+import { ConfigComponent } from './config/config.component';
+import { ConfigService } from './config/config.service';
+import { AboutComponent } from './about/about.component';
+import { MessageService } from './message.service';
+import { MessagesComponent } from './messages/messages.component';
+import {
+  RequestCache,
+  RequestCacheWithMap
+} from './request-cache.service';
+import { InMemoryDataService }  from './in-memory-data.service';
+
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+
+// import { RequestCache, RequestCacheWithMap } from './request-cache.service';
+
+import { ProjectService } from './redmine/project.service';
+import { ProjectsComponent } from './redmine/projects/projects.component';
+import { httpInterceptorProviders } from './http-interceptors/index';
+import { PackageSearchService } from './package-search/package-search.service';
+import { HttpErrorHandlerService } from './http-error-handler.service';
+
+// import { AuthService } from './auth.service';
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, BrowserAnimationsModule, MaterialModule],
-  declarations: [AppComponent, HelloComponent, MenuComponent],
-  bootstrap: [AppComponent]
+  imports: [
+    BrowserModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    HttpClientModule,
+    // HttpClientXsrfModule.withOptions({
+    //   cookieName: 'My-Xsrf-Cookie',
+    //   headerName: 'My-Xsrf-Header',
+    // }),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService, {
+    //     dataEncapsulation: false,
+    //     passThruUnknownUrl: true,
+    //     put204: false // return entity after PUT/update
+    //   }
+    // )
+  ],
+  declarations: [
+    AppComponent,
+    HelloComponent,
+    MenuComponent,
+    ConfigComponent,
+    AboutComponent,
+    MessagesComponent,
+    ProjectsComponent
+  ],
+  bootstrap: [AppComponent],
+  providers: [
+    RedmineProjectsService,
+    ConfigService,
+    MessageService,
+    {
+      provide: RequestCache,
+      useClass: RequestCacheWithMap //,
+      // multi: true
+    },
+    httpInterceptorProviders,
+    ProjectService,
+    InMemoryDataService,
+    PackageSearchService,
+    // HttpErrorHandlerService //,
+    // AuthService
+  ]
 })
 export class AppModule { }
