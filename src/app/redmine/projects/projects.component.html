@@ -7,10 +7,11 @@
 				<button mat-icon-button (click)="showInfo(link)">Info</button>
       </mat-list-item>
     </mat-nav-list>
-    head: <p *ngFor="let head of headers">{{head}}</p>
+    head:
+    <p *ngFor="let head of headers">{{head}}</p>
   </mat-card-content>
   <mat-card-actions>
     <button  mat-stroked-button (click)="loadProjectsList()">Show</button>
     <button mat-stroked-button (click)="showProjectsResponse()">get Response</button>
-  </mat-card-actions> 
+  </mat-card-actions>
 </mat-card>
