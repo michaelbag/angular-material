@@ -43,15 +43,16 @@ export class ProjectService {
         });
     }
     */
-
+ 
   getProjectList() {
     return (
       this.config.getConfig()
         .pipe(
           retry(3),
           switchMap((configData: Config) => {
-            //return (this.http.get<Projects>(`${configData.rootURL}/projects.json`, { params: { 'key': configData.apiKey } })
-            return (this.http.get<Projects>('assets/test.json', { params: { 'key': configData.apiKey } })
+            return (this.http.get<Projects>(`${configData.rootURL}/projects.json`, 
+            { headers: {'Access-Control-Allow-Origin': '*',
+            'X-Redmine-API-Key': configData.apiKey}, params: { 'key': configData.apiKey } })
               .pipe(
                 retry(3),
                 catchError(this.handleError) // then handle the error

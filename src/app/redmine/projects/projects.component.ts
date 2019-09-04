@@ -31,6 +31,10 @@ export class ProjectsComponent implements OnInit {
       });
   }
 
+  showInfo(link: string) {
+    
+  }
+
    showProjectsResponse() {
     this.projectService.getProjectsResponse()
       // resp is of type `HttpResponse<Config>`

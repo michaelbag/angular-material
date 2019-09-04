@@ -3,7 +3,7 @@
 	<mat-card-content>
 		<mat-nav-list>
 			<mat-list-item *ngFor="let project of projects">
-				<a matLine href="">{{ project.name }} - {{ project.identifier }}</a>
+				<a matLine href="">{{ project.name }}</a>
 				<button mat-icon-button (click)="showInfo(link)">Info</button>
       </mat-list-item>
     </mat-nav-list>
