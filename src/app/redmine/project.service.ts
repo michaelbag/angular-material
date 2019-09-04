@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpErrorResponse, HttpParams, HttpHeaders, RequestOptions } from '@angular/common/http';
 import { ConfigService, Config } from '../config/config.service';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError, retry, switchMap } from 'rxjs/operators';
 import { MessageService } from '../message.service';
 
 // Для информации по формату: https://www.redmine.org/projects/redmine/wiki/Rest_Projects
@@ -34,12 +34,32 @@ export class ProjectService {
   constructor(private config: ConfigService, private http: HttpClient, private messageService: MessageService) {
 
   }
-
-  getProjectListURL(): string {
-    if (!this.projectListURL) {
-      this.projectListURL = `${this.config.getRootURL()}/projects.json`;
+  /*
+    getProjectListURL(): string {
+      this.config.getConfig()
+        .subscribe((data: Config) => {
+          // return (`${data.rootURL}/projects.json`);
+          return ('assets/test.json');
+        });
     }
-    return (this.projectListURL);
+    */
+
+  getProjectList() {
+    return (
+      this.config.getConfig()
+        .pipe(
+          retry(3),
+          switchMap((configData: Config) => {
+            //return (this.http.get<Projects>(`${configData.rootURL}/projects.json`, { params: { 'key': configData.apiKey } })
+            return (this.http.get<Projects>('assets/test.json', { params: { 'key': configData.apiKey } })
+              .pipe(
+                retry(3),
+                catchError(this.handleError) // then handle the error
+              ));
+          }),
+          catchError(this.handleError)
+        )
+    );
   }
 
   getHttpOptions(): RequestOptions {
@@ -57,30 +77,10 @@ export class ProjectService {
         }),
         'observe': 'response'
       });
-      this.requestOptions.headers.set('key', this.config.getApiKey());
-      this.requestOptions.params.set('key', this.config.getApiKey()); 
+      //this.requestOptions.headers.set('key', this.config.getApiKey());
+      //this.requestOptions.params.set('key', this.config.getApiKey());
     }
     return (this.requestOptions);
-  }
-
-  getProjectList() {
-
-    this.messageService.add(`Try to get ${this.getProjectListURL()}...`); 
-
-// !!! test
-
-    return (this.http.get<Projects>('assets/test.json')
-      .pipe(
-        retry(3),
-        catchError(this.handleError)
-      ));
-/*
-    return (this.http.get<Projects>(this.getProjectListURL(), { params: { 'key': this.config.getApiKey() } })
-      .pipe(
-        retry(3),
-        catchError(this.handleError) // then handle the error
-      ));
-      */
   }
 
   getProjectsResponse(): Observable<HttpResponse<Projects>> {
