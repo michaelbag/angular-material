@@ -41,6 +41,7 @@ import { ProjectComponent } from './redmine/project/project.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 import { RoutingModule } from './routing/routing.module';
+import { DashBoardComponent } from './dash-board/dash-board.component';
 
 // import { AuthService } from './auth.service';
 
@@ -74,7 +75,8 @@ import { RoutingModule } from './routing/routing.module';
     MessagesComponent,
     ProjectsComponent,
     ProjectComponent,
-    NavBarComponent
+    NavBarComponent,
+    DashBoardComponent
   ],
   bootstrap: [AppComponent],
   providers: [
