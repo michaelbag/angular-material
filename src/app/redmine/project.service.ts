@@ -15,6 +15,7 @@ export interface Project {
   is_public: boolean;
   created_on: Date;
   updated_on: Date;
+  homepage: String;
 }
 
 export interface Projects {
@@ -35,7 +36,7 @@ export class ProjectService {
 
   }
   
-  getProject(id: number): Observable<Project> {
+  getProject(id: string): Observable<Project> {
     return (
       this.config.getConfig()
         .pipe(
