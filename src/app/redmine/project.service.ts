@@ -75,7 +75,7 @@ export class ProjectService {
         catchError(this.handleError)
       ));
 /*
-    return (this.http.get<Projects>(this.getProjectListURL(), { params: { 'apiKey': this.config.getApiKey() } })
+    return (this.http.get<Projects>(this.getProjectListURL(), { params: { 'key': this.config.getApiKey() } })
       .pipe(
         retry(3),
         catchError(this.handleError) // then handle the error
