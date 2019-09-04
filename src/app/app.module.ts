@@ -26,7 +26,7 @@ import {
   RequestCache,
   RequestCacheWithMap
 } from './request-cache.service';
-import { InMemoryDataService }  from './in-memory-data.service';
+import { InMemoryDataService } from './in-memory-data.service';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
@@ -38,11 +38,16 @@ import { httpInterceptorProviders } from './http-interceptors/index';
 import { PackageSearchService } from './package-search/package-search.service';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { ProjectComponent } from './redmine/project/project.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+
+import { RoutingModule } from './routing/routing.module';
 
 // import { AuthService } from './auth.service';
 
 @NgModule({
+
   imports: [
+    RoutingModule,
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -68,7 +73,8 @@ import { ProjectComponent } from './redmine/project/project.component';
     AboutComponent,
     MessagesComponent,
     ProjectsComponent,
-    ProjectComponent
+    ProjectComponent,
+    NavBarComponent
   ],
   bootstrap: [AppComponent],
   providers: [

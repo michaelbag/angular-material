@@ -1,11 +1,2 @@
-<button mat-button [matMenuTriggerFor]="menu"><i class="material-icons">home</i> Главная</button>
-<mat-menu #menu="matMenu">
-  <button mat-menu-item>О чем это?</button>
-</mat-menu>
-<button mat-button [matMenuTriggerFor]="menu2">Поддержка</button>
-<mat-menu #menu2="matMenu">
-  <button mat-menu-item>Мои запросы</button>
-  <button mat-menu-item>Мои Задачи</button>
-  <button mat-menu-item>Проекты</button>
-  <button mat-menu-item>Задачи</button>
-</mat-menu>
+<button mat-button routerLink="/">Главная</button>
+<button mat-button routerLink="/projects" routerLinkActive="mat-raised-button">Проекты</button>
