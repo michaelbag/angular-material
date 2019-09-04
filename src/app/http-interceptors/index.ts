@@ -16,6 +16,8 @@ import { NoopInterceptor } from './noop-interceptor';
 import { TrimNameInterceptor } from './trim-name-interceptor';
 import { UploadInterceptor } from './upload-interceptor';
 
+
+
 // #docregion interceptor-providers
 
 /** Http interceptor providers in outside-in order */
@@ -28,7 +30,7 @@ export const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: TrimNameInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true },
   // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
- { provide: HTTP_INTERCEPTORS, useClass: UploadInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: UploadInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
 
   // #docregion interceptor-providers

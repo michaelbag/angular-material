@@ -30,25 +30,14 @@ export class ProjectService {
   error: any;
   projectListURL: string;
   requestOptions: RequestOptions;
-  private config: Config;
 
-  constructor(private configService: ConfigService, private http: HttpClient, private messageService: MessageService) {
+  constructor(private config: ConfigService, private http: HttpClient, private messageService: MessageService) {
 
-  }
-
-  getConfig(): Config {
-    if (!this.config) {
-      this.configService.getConfig()
-        .subscribe((data: Config) => this.config = { ...data },
-          error => this.error = error);
-    }
-    return (this.config);
   }
 
   getProjectListURL(): string {
     if (!this.projectListURL) {
-      this.projectListURL = `${this.getConfig().rootURL}/projects.json`;
-      // ?apiKey=${this.getConfig().apiKey}
+      this.projectListURL = `${this.config.getRootURL()}/projects.json`;
     }
     return (this.projectListURL);
   }
@@ -68,26 +57,41 @@ export class ProjectService {
         }),
         'observe': 'response'
       });
-      this.requestOptions.headers.set('apiKey', this.getConfig().apiKey);
-      this.requestOptions.params.set('apiKey', this.getConfig().apiKey);
+      this.requestOptions.headers.set('key', this.config.getApiKey());
+      this.requestOptions.params.set('key', this.config.getApiKey()); 
     }
     return (this.requestOptions);
   }
 
   getProjectList() {
 
-    this.messageService.add(`Try to get ${this.getProjectListURL()}...`);
+    this.messageService.add(`Try to get ${this.getProjectListURL()}...`); 
 
-    return (this.http.get<Projects>(this.getProjectListURL(), { params: { 'apiKey': this.getConfig().apiKey } })
+// !!! test
+
+    return (this.http.get<Projects>('assets/test.json')
+      .pipe(
+        retry(3),
+        catchError(this.handleError)
+      ));
+/*
+    return (this.http.get<Projects>(this.getProjectListURL(), { params: { 'apiKey': this.config.getApiKey() } })
       .pipe(
         retry(3),
         catchError(this.handleError) // then handle the error
       ));
+      */
   }
 
   getProjectsResponse(): Observable<HttpResponse<Projects>> {
-    let headers = new HttpParams().set("apiKey", this.getConfig().apiKey);
-    return this.http.get<Projects>(this.getProjectListURL(), { 'observe': 'response', params: { 'apiKey': this.getConfig().apiKey } });
+    let headers = new HttpParams().set("key", this.config.getApiKey());
+    return (this.http.get<Projects>(
+      this.getProjectListURL(),
+      { 'observe': 'response', params: { 'key': this.config.getApiKey() } })
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      ));
   }
 
   private handleError(error: HttpErrorResponse) {

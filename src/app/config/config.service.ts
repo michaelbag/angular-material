@@ -13,9 +13,20 @@ export interface Config {
 @Injectable()
 export class ConfigService {
   configUrl = 'assets/config.json';
+  _config: Config;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) { }
 
+  loadConfig() {
+    this.getConfig().
+      subscribe(
+        (data: Config) => this._config = { ...data }
+      );
+  }
+
+  config(): Config {
+    if (!this._config) { this.loadConfig(); }
+    return (this._config);
   }
 
   getConfig() {
@@ -24,6 +35,14 @@ export class ConfigService {
         retry(3),
         catchError(this.handleError)
       );
+  }
+
+  getRootURL(): string {
+    return (this.config().rootURL);
+  }
+
+  getApiKey(): string {
+    return (this.config().apiKey);
   }
 
   getConfigResponse(): Observable<HttpResponse<Config>> {
@@ -53,7 +72,4 @@ export class ConfigService {
         catchError(this.handleError)
       );
   }
-
-  
-
 }
