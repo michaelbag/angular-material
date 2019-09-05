@@ -11,8 +11,11 @@ import { DashBoardComponent } from '../dash-board/dash-board.component';
 
     RouterModule.forRoot(
       [
-        { path: '', component: DashBoardComponent, pathMatch: 'full'},
-        { path: 'projects/:id', component: ProjectsComponent }
+        { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+        { path: 'dashboard', component: DashBoardComponent },
+        { path: 'project/:id', component: ProjectComponent },
+        { path: 'projects', component: ProjectsComponent }
+        
       ],
       { enableTracing: true } // <-- debugging purposes only
     ),

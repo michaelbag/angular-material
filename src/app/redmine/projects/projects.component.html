@@ -1,10 +1,8 @@
-<app-project></app-project>
-
 <mat-card>
 	<mat-card-title>{{title}}</mat-card-title>
 	<mat-card-content>
 		<mat-nav-list>
-			<mat-list-item *ngFor="let project of projects" routerLink="/projects/{{project.id}}">
+			<mat-list-item *ngFor="let project of projects" routerLink="/project/{{project.id}}">
 				<a matLine>{{ project.name }}</a>
         <p matLine class="description"><span>{{project.description}}</span></p>
 				<!-- <button mat-icon-button (click)="showInfo(link)">Info</button> -->
