@@ -32,39 +32,26 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 // import { RequestCache, RequestCacheWithMap } from './request-cache.service';
 
-import { ProjectService } from './redmine/project.service';
-import { ProjectsComponent } from './redmine/projects/projects.component';
 import { httpInterceptorProviders } from './http-interceptors/index';
 import { PackageSearchService } from './package-search/package-search.service';
 import { HttpErrorHandler } from './http-error-handler.service';
-import { ProjectComponent } from './redmine/project/project.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-
 import { RoutingModule } from './routing/routing.module';
 import { DashBoardComponent } from './dash-board/dash-board.component';
 
 // import { AuthService } from './auth.service';
+import { RedmineModule } from './redmine/redmine.module';
 
 @NgModule({
 
   imports: [
-    RoutingModule,
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
-    // HttpClientXsrfModule.withOptions({
-    //   cookieName: 'My-Xsrf-Cookie',
-    //   headerName: 'My-Xsrf-Header',
-    // }),
-    // HttpClientInMemoryWebApiModule.forRoot(
-    //   InMemoryDataService, {
-    //     dataEncapsulation: false,
-    //     passThruUnknownUrl: true,
-    //     put204: false // return entity after PUT/update
-    //   }
-    // )
+    RedmineModule,
+    RoutingModule,
   ],
   declarations: [
     AppComponent,
@@ -73,12 +60,15 @@ import { DashBoardComponent } from './dash-board/dash-board.component';
     ConfigComponent,
     AboutComponent,
     MessagesComponent,
-    ProjectsComponent,
-    ProjectComponent,
     NavBarComponent,
     DashBoardComponent
   ],
   bootstrap: [AppComponent],
+  exports: [
+    BrowserAnimationsModule,
+    MaterialModule,
+
+  ],
   providers: [
     RedmineProjectsService,
     ConfigService,
@@ -89,7 +79,6 @@ import { DashBoardComponent } from './dash-board/dash-board.component';
       // multi: true
     },
     httpInterceptorProviders,
-    ProjectService,
     InMemoryDataService,
     PackageSearchService,
     // HttpErrorHandlerService //,
