@@ -1,18 +1,8 @@
 <div class="mat-app-background basic-container">
+	<app-nav-bar></app-nav-bar>
 	<app-menu></app-menu>
 
-<app-projects></app-projects>
+	<router-outlet></router-outlet>
 
-	<mat-card>
-		<mat-card-title>
-			<hello name="{{ name }}"></hello>
-		</mat-card-title>
-		<mat-card-content>
-			Начинаем что-то делать, чтобы что-то случилось... :)
-		</mat-card-content>
-	</mat-card>
-
-  <app-config></app-config>
-
-  <app-messages></app-messages>
+	<app-messages></app-messages>
 </div>

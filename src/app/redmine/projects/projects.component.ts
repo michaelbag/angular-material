@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Project, Projects, ProjectService } from '../project.service';
-import { Response } from '@angular/common/http';
-
-import {MessageService} from '../../message.service';
+import { ProjectComponent } from '../project/project.component';
+// import { Response } from '@angular/common/http';
 
 @Component({
   selector: 'app-projects',
@@ -17,7 +16,7 @@ export class ProjectsComponent implements OnInit {
   projectsText: any;
   header: any;
 
-  constructor(private projectService: ProjectService, private messageService: MessageService) { }
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit() {
     this.title = "Проекты";

@@ -15,6 +15,7 @@ export interface Project {
   is_public: boolean;
   created_on: Date;
   updated_on: Date;
+  homepage: String;
 }
 
 export interface Projects {
@@ -34,6 +35,34 @@ export class ProjectService {
   constructor(private config: ConfigService, private http: HttpClient, private messageService: MessageService) {
 
   }
+
+  getProject(id: string): Observable<Project> {
+    return (
+      this.config.getConfig()
+        .pipe(
+          retry(3),
+          switchMap((configData: Config) => {
+            this.messageService.add(`getProject, try get ${configData.rootURL}/projects/${id}.json`);
+            this.http.get(`${configData.rootURL}/projects/${id}.json`,
+              {
+                headers: { 'Access-Control-Allow-Origin': '*', 'X-Redmine-API-Key': configData.apiKey },
+                params: { 'key': configData.apiKey }
+              })
+              .pipe(
+                retry(3),
+                catchError(this.handleError) // then handle the error
+              )
+              .subscribe((data: any) => {
+                this.messageService.add(`Got project ${data.project.name}!`);
+                return (data.project);
+              });
+
+          }),
+          catchError(this.handleError)
+        )
+    );
+  }
+
   /*
     getProjectListURL(): string {
       this.config.getConfig()
@@ -43,16 +72,20 @@ export class ProjectService {
         });
     }
     */
- 
+
   getProjectList() {
     return (
       this.config.getConfig()
         .pipe(
           retry(3),
           switchMap((configData: Config) => {
-            return (this.http.get<Projects>(`${configData.rootURL}/projects.json`, 
-            { headers: {'Access-Control-Allow-Origin': '*',
-            'X-Redmine-API-Key': configData.apiKey}, params: { 'key': configData.apiKey } })
+            return (this.http.get<Projects>(`${configData.rootURL}/projects.json`,
+              {
+                headers: {
+                  'Access-Control-Allow-Origin': '*',
+                  'X-Redmine-API-Key': configData.apiKey
+                }, params: { 'key': configData.apiKey }
+              })
               .pipe(
                 retry(3),
                 catchError(this.handleError) // then handle the error
@@ -85,14 +118,25 @@ export class ProjectService {
   }
 
   getProjectsResponse(): Observable<HttpResponse<Projects>> {
-    let headers = new HttpParams().set("key", this.config.getApiKey());
-    return (this.http.get<Projects>(
-      this.getProjectListURL(),
-      { 'observe': 'response', params: { 'key': this.config.getApiKey() } })
-      .pipe(
-        retry(2),
-        catchError(this.handleError)
-      ));
+    // TODO: Get Response type in function
+    return (
+      this.config.getConfig()
+        .pipe(
+          retry(3),
+          switchMap((configData: Config) => {
+            return (this.http.get<Projects>(`${configData.rootURL}/projects.json`,
+              {
+                headers: { 'Access-Control-Allow-Origin': '*', 'X-Redmine-API-Key': configData.apiKey },
+                params: { 'key': configData.apiKey }
+              })
+              .pipe(
+                retry(3),
+                catchError(this.handleError)
+              ))
+          })
+        )
+    );
+
   }
 
   private handleError(error: HttpErrorResponse) {
