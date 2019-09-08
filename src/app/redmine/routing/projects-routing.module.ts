@@ -16,7 +16,6 @@ const projectsRoutes: Routes = [
   ],
   exports: [
     RouterModule
-  ],
-  declarations: []
+  ]
 })
 export class ProjectsRoutingModule { }
