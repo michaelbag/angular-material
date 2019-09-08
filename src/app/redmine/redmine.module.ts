@@ -14,8 +14,7 @@ import { MaterialModule } from '../material/material.module';
     CommonModule,
     ProjectsRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule,
-
+    MaterialModule
   ],
   declarations: [
     ProjectsComponent,

@@ -6,7 +6,7 @@ import { ProjectsComponent } from '../projects/projects.component';
 import { ProjectComponent } from '../project/project.component';
 
 const projectsRoutes: Routes = [
-  { path: 'projects', component: ProjectsComponent, data: { title: 'Projects' } },
+  { path: 'projects', component: ProjectComponent },
   { path: 'project/:id', component: ProjectComponent }
 ];
 
