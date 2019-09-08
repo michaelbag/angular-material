@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Project, Projects, ProjectService } from '../project.service';
 import { ProjectComponent } from '../project/project.component';
+import { RouterModule, Routes, ActivatedRoute, Router }  from '@angular/router';
 // import { Response } from '@angular/common/http';
 
 @Component({
@@ -16,7 +17,8 @@ export class ProjectsComponent implements OnInit {
   projectsText: any;
   header: any;
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService, private route: ActivatedRoute,
+  private router: Router) { }
 
   ngOnInit() {
     this.title = "Проекты";

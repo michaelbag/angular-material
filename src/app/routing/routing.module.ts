@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { DashBoardComponent } from '../dash-board/dash-board.component';
 
-const routes:Routes = [
+const routes: Routes = [
         { path: 'dashboard', component: DashBoardComponent },
         { path: '', redirectTo: 'dashboard', pathMatch: 'full'}
 ];
@@ -16,6 +16,7 @@ const routes:Routes = [
       { enableTracing: true } // <-- debugging purposes only
       
     ),
+    CommonModule
   ],
   declarations: [],
   exports: [ RouterModule ]

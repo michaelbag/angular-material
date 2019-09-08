@@ -13,6 +13,7 @@ const projectsRoutes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forChild(projectsRoutes),
+    CommonModule
   ],
   exports: [
     RouterModule
